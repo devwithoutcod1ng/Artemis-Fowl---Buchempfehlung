@@ -61,8 +61,30 @@
        (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
 
+  <div class="ad-container ad-left">
+    <img id="ad-img-left" class="ad-img" src="" alt="Werbung links" />
+  </div>
+  <div class="ad-container ad-right">
+    <img id="ad-img-right" class="ad-img" src="" alt="Werbung rechts" />
+  </div>
+
   <script>
-    // Die Bild-Werbung wurde entfernt, daher ist dieses Script nicht mehr nötig.
+    document.addEventListener('DOMContentLoaded', function() {
+      // Liste der Werbebilder im 'Werbung'-Ordner
+      const adImages = [
+        'Werbung/1.png',
+        'Werbung/2.png',
+        'Werbung/3.png',
+        'Werbung/4.png',
+        'Werbung/5.png'
+      ];
+      function getRandomAd() {
+        return adImages[Math.floor(Math.random() * adImages.length)];
+      }
+      // Links und rechts unterschiedliche zufällige Bilder
+      document.getElementById('ad-img-left').src = getRandomAd();
+      document.getElementById('ad-img-right').src = getRandomAd();
+    });
   </script>
 
 </body>
