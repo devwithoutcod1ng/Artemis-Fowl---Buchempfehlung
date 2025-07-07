@@ -45,6 +45,25 @@
 </head>
 <body>
 
+  <!-- Captcha-Overlay mit Google reCAPTCHA -->
+  <div id="captcha-overlay" style="position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:white;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+    <form action="#" method="POST" onsubmit="return validateRecaptcha()" style="display:flex;flex-direction:column;align-items:center;">
+      <div style="font-size:1.5em;margin-bottom:1em;">Bitte bestätige, dass du kein Roboter bist:</div>
+      <div class="g-recaptcha" data-sitekey="6LciGnsrAAAAAPn8j_Qv-YAHDnWVcoI42CaH-lFU"></div>
+      <br />
+      <button type="submit" style="font-size:1em;">Absenden</button>
+    </form>
+  </div>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LciGnsrAAAAAPn8j_Qv-YAHDnWVcoI42CaH-lFU"></script>
+  <script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6LciGnsrAAAAAPn8j_Qv-YAHDnWVcoI42CaH-lFU', {action: 'submit'}).then(function(token) {
+            console.log("Token:", token);
+            // Den Token musst du an deinen Server schicken zur Validierung
+        });
+    });
+  </script>
+
   <div class="bold indented">Artemis Fowl - Buchempfehlung</div>
   <div class="indented">
     Artemis Fowl von Eoin Colfer - Ein faszinierendes Buch aus dem Jahr 2001, das auf über 300 Seiten mit einer Mischung aus Fantasy, Action und dunklem Humor verzaubert. In der Geschichte geht es um einen sehr tallentierten, hyperintelligenten 12 jährigen Jungen von der dunklen Seite, der unbedingt die Existenz von Elfen beweisen möchte und dafür alles tut was nötig ist, egal ob Diebstahl, Entführung oder andere mehr als nur fragwürdige Dinge. Er nimmt alles in Kauf, nur um das Familienvermögen zu retten. Und trotz seiner Disziplin und seines strengen Charakters, ganz am Ende zeigt der Junge sogar ein bisschen Herz. Besonders Spannend ist auch, dass die Elfen High-Tech Technik und Spezialeinheiten besitzen obwohl die meisten Menschen vermutlich eher denken würdem, dass elfen im Wald leben und Bäume ansingen. Dieses Buch hat mich gefesselt, als ich es vor ein paar Jahren gehört habe und ich würde jedem empfehlen dieses Buch auch zu lesen.
@@ -85,6 +104,18 @@
       document.getElementById('ad-img-left').src = getRandomAd();
       document.getElementById('ad-img-right').src = getRandomAd();
     });
+
+    // Entferne das alte Captcha, füge stattdessen die Logik für das Google reCAPTCHA-Overlay ein
+    function validateRecaptcha() {
+      const response = grecaptcha.getResponse();
+      if (response.length === 0) {
+        alert("Bitte bestätige, dass du kein Roboter bist!");
+        return false;
+      }
+      // Overlay ausblenden, wenn Captcha gelöst
+      document.getElementById('captcha-overlay').style.display = 'none';
+      return false; // Seite nicht neu laden
+    }
   </script>
 
 </body>
